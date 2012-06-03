@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="http://cdn.socket.io/stable/socket.io.js"></script>
+        <script>WEB_SOCKET_SWF_LOCATION = 'http://cdn.socket.io/stable/WebSocketMain.swf';</script>
+
+        <!-- Change this path if necessary, obviously -->
+        <script src="../notyfire.js"></script>
+        <script>
+            var client = new Notyfire('localhost', 8001);
+            window.onload = function() {
+
+                client.onConnect = function() {
+                        $("#data_output").append("<div>Connected!</div>");
+                };
+
+                client.listen('default', function(data) {
+                        $("#data_output").append("<div>" + data + "</div>");
+                });
+
+
+                client.connect();
+                client.subscribe('default');
+            };
+    </script>
+    <style type="text/css">
+        head, body {
+            background: #464b4c;
+            color: #eee;
+            font-family: arial;
+        }
+
+        #data_output {
+            width: 60em;
+            height: 20em;
+            overflow:auto;
+            border: 1px solid #bbb;
+            background: #fff;
+            border-radius: 3px;
+            padding: 5px;
+            color: #333;
+        }
+
+        .container
+        {
+            width: 60em;
+            margin: 20px auto;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h3>Notyfire - Test</h3>
+            <div id="data_output"></div>
+        </div>
+    </body>
+</html>
